@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'js-cookie'
 import './directory.styles.scss';
 import MenuItem from '../menu-item/menu-item.component';
 import {API_HOST} from '../../env';

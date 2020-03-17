@@ -1,35 +1,24 @@
 import React from 'react';
 import './menu-item.styles.scss';
-import CustomButton from '../custom-button/custom-button.component';
 import {API_HOST} from '../../env';
+import {Card, Button} from 'react-bootstrap';
 
 class MenuItem extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const {name, price_usd, description, photo} = this.props.item;
-        const addItem  = this.props.addItem;
+        const addItem = this.props.addItem;
         return (
-            <div className='menu-item'>
-                <div className='item-body'>
-                    <div
-                        className='background-image'
-                        style={{
-                            backgroundImage: `url(${API_HOST}${photo})`
-                        }}
-                    />
-                    <p className='content'>
+            <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={API_HOST + photo}/>
+                <Card.Body>
+                    <Card.Title>{name}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">${price_usd}</Card.Subtitle>
+                    <Card.Text>
                         {description}
-                    </p>
-                </div>
-                <div className='item-footer'>
-                    <span className='name'>{name}</span>
-                    <span className='price'>{`$${price_usd}`}</span>
-                </div>
-                <CustomButton inverted onClick={() => addItem(this.props.item)}>Add to Cart</CustomButton>
-            </div>
+                    </Card.Text>
+                    <Button onClick={() => addItem(this.props.item)} variant="primary">Add to cart</Button>
+                </Card.Body>
+            </Card>
         );
     }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
 import {API_HOST} from "../../env";
-import Cookies from "js-cookie";
 
 class Cart extends React.Component {
     constructor(props) {
@@ -26,8 +25,8 @@ class Cart extends React.Component {
         this.setState({phone: e.target.value});
     }.bind(this)
 
-    addOrder = function () {
-        const {cart, cartItems, cartTotal, orderID, dispatch} = this.props;
+    addOrder = async () => {
+        const {cart} = this.props;
 
         let payload = {
             'orderList': cart.map(pizza => (pizza.id)),
@@ -37,11 +36,11 @@ class Cart extends React.Component {
             'address': this.state.address,
         }
 
-        const data = fetch(`${API_HOST}/order/add`, {
-            method: 'POST',
+        fetch(`${API_HOST}/api/order/add`, {
+            method: "POST",
             credentials: "include",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(payload)
 
@@ -50,7 +49,7 @@ class Cart extends React.Component {
         });
 
         this.setState({
-            isSuccessful: false
+            isSuccessful: true
         });
     }
 
@@ -109,9 +108,13 @@ class Cart extends React.Component {
                     <Button variant="secondary" onClick={this.props.onHide}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => {this.addOrder()}}>
-                        Make order
-                    </Button>
+                    {this.state.isSuccessful ? null :
+                        <Button variant="primary" onClick={() => {
+                            this.addOrder()
+                        }}>
+                            Make order
+                        </Button>
+                    }
                 </Modal.Footer>
             </Modal>
         )

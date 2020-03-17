@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import HomePage from './pages/homepage/homepage.component';
+import HomePage from './pages/homepage.component';
 import Header from './components/header/header.component';
 import Cart from "./components/cart/cart.component";
 
